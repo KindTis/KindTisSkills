@@ -44,7 +44,7 @@ Jira 도구와 필요한 스킬이 **새 세션에서도** 사용 가능한지 �
 
 ## 맥락을 전달한 뒤 실제 goal 실행 확인
 
-1. 검증된 저장소 또는 전용 worktree를 `cwd`로 새 세션을 시작한다. 모델·추론 설정은 사용자 지정과 적용 규칙에 맞게 현재 스키마로 전달하고 반환된 설정을 확인한다. 기본 지침을 교체하는 `baseInstructions`나 `developerInstructions`로 업무 지시를 주입하지 않는다.
+1. 지시한 작업 공간, 없으면 검증된 저장소를 `cwd`로 새 세션을 시작한다. 모델·추론 설정은 사용자 지정과 적용 규칙에 맞게 현재 스키마로 전달하고 반환된 설정을 확인한다. 기본 지침을 교체하는 `baseInstructions`나 `developerInstructions`로 업무 지시를 주입하지 않는다.
 
 ```json
 {"id":2,"method":"thread/start","params":{"cwd":"<검증한 절대 경로>","ephemeral":false}}
@@ -71,7 +71,7 @@ Jira 도구와 필요한 스킬이 **새 세션에서도** 사용 가능한지 �
 goal이 `null`이면 첫 turn의 진행·실패 여부부터 확인한다. 세션이 직접 goal을 생성할 수 없을 때만 업무 맥락이 전달됐고 기존 goal이 없음을 확인한 뒤 `thread/goal/set`을 사용한다.
 
 ```json
-{"id":6,"method":"thread/goal/set","params":{"threadId":"<반환된 thread.id>","objective":"첨부된 명세를 $improve:implement 스킬 지침에 따라 작업한다. 작업은 worktree를 이용해 격리된 공간에서 진행한다","status":"active"}}
+{"id":6,"method":"thread/goal/set","params":{"threadId":"<반환된 thread.id>","objective":"첨부된 명세를 $improve:implement 스킬 지침에 따라 작업한다. 작업은 지시한 작업 공간에서 진행하고, 지시가 없으면 현재 브랜치에서 진행한다","status":"active"}}
 ```
 
 `thread/goal/set`의 활성화가 자동 실행을 유발하는지는 입력 스키마만으로 보장되지 않는다. 맥락 없이 goal부터 활성화하거나, 이미 진행 중인 turn에 같은 실행 지시를 중복 전송하지 않는다. 실제 실행이 시작되지 않았다면 현 상태를 확인하고 기존 세션에서 필요한 시작 단계만 수행한다. 사용자가 요청하지 않은 token budget을 넣지 않는다.

@@ -1,6 +1,6 @@
 ---
 name: implement
-description: Implement a confirmed immutable specification by writing an implementation plan, obtaining an independent Programmer plan review, delegating implementation, and reviewing and verifying the code. Use for approved implementation.
+description: Implement a confirmed immutable specification by writing an implementation plan, obtaining an independent Programmer plan review, delegating implementation, and reviewing and verifying the code. Use when the user designates a confirmed specification document to implement.
 ---
 
 # 불변 명세 기반 구현

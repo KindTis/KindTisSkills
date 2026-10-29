@@ -8,9 +8,11 @@
 | --- | --- | --- |
 | [.agents/plugins/marketplace.json](.agents/plugins/marketplace.json) | `kindtis-skills` 마켓플레이스와 선택 설치 목록 | — |
 | [AGENTS.md](AGENTS.md) | 전역 작업 지침 전체 사본 | 2026-10-29 기준 |
-| [plugins/goal-report](plugins/goal-report) | 구현 완료 보고서 스킬, 실행 코드, hook, 예시, 글꼴 | 1.4.8 |
-| [plugins/improve](plugins/improve) | 명세 검토·개선 및 확정 명세 구현 스킬, 참조 문서, 테스트 자료 | 1.1.1 |
-| [plugins/jira](plugins/jira) | Jira 에픽·명세·개발·상태 관리 스킬과 참조 문서 | 1.3.0 |
+| [agents](agents) | Codex 커스텀 역할 설정(Advisor·Art Director·Implementer·Tester·Watchdog) | — |
+| [archive](archive) | 플러그인에서 분리한 과거 기록(설치 대상 아님) | — |
+| [plugins/goal-report](plugins/goal-report) | 구현 완료 보고서 스킬, 실행 코드, hook, 예시, 글꼴 | 1.4.9 |
+| [plugins/improve](plugins/improve) | 명세 검토·개선 및 확정 명세 구현 스킬, 참조 문서, 테스트 자료 | 1.1.2 |
+| [plugins/jira](plugins/jira) | Jira 에픽·명세·개발·상태 관리 스킬과 참조 문서 | 1.3.1 |
 
 ## 마켓플레이스 등록과 설치
 
@@ -29,11 +31,13 @@ codex plugin add improve@kindtis-skills
 codex plugin add jira@kindtis-skills
 ```
 
+jira는 improve 플러그인과 superpowers 플러그인의 `brainstorming` 스킬이 필요하며, worktree 작업을 지시하면 `using-git-worktrees`도 사용합니다. improve는 설치되어 있으면 superpowers의 `writing-plans`·`executing-plans`·`using-git-worktrees`와 ponytail의 `ponytail-review`를 보조로 사용합니다.
+
 데스크톱 앱에서는 등록 후 앱을 다시 시작하고 플러그인 디렉터리에서 **KindTisSkills** 마켓플레이스를 선택해 원하는 플러그인을 설치합니다.
 
 GitHub에 반영하기 전에는 이 저장소 루트에서 `codex plugin marketplace add .`로 로컬 구성을 확인할 수 있습니다. 로컬 등록과 GitHub 등록은 같은 마켓플레이스 이름을 사용하므로, GitHub 원본으로 전환할 때는 `codex plugin marketplace remove kindtis-skills`로 로컬 등록을 제거한 뒤 위의 GitHub 등록 명령을 실행합니다.
 
-전역 `AGENTS.md`의 적용은 별도로 관리합니다. goal-report의 PC별 실행·배포 설정은 [REPORTING.md](plugins/goal-report/REPORTING.md)를 참고합니다. Jira 작업에는 사용 환경에서 제공하는 Jira 도구와 해당 서비스 접근 권한이 필요합니다.
+전역 `AGENTS.md`와 [agents](agents)의 역할 설정 적용은 별도로 관리합니다. goal-report의 PC별 실행·배포 설정은 [REPORTING.md](plugins/goal-report/REPORTING.md)를 참고합니다. Jira 작업에는 사용 환경에서 제공하는 Jira 도구와 해당 서비스 접근 권한이 필요합니다.
 
 ## 플러그인 추가와 갱신
 

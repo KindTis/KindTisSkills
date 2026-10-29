@@ -1,6 +1,6 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "jira",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "아이디어 티켓의 일괄 명세화, 에픽·명세 첨부 티켓 등록, 격리된 개발 실행과 Jira 상태·댓글 보고를 관리한다."
 }

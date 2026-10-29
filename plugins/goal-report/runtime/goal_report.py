@@ -115,7 +115,7 @@ def atomic_json(path: Path, value):
 
 
 def read_json(path: Path):
-    return json.loads(path.read_text(encoding='utf-8'))
+    return json.loads(path.read_text(encoding='utf-8-sig'))
 
 
 def atomic_text(path, value):

@@ -21,13 +21,13 @@ $settings = Get-Content -Raw "$env:USERPROFILE/.codex/goal-report/settings.json"
 ```
 
 - `verified`: 현재 보고서 key(연결된 goal이 있으면 thread/goal도 포함), 고정한 게시 후보 해시, Worker 버전 100% 적용과 현재 보고서의 비로그인 차단을 확인했습니다. 기존 보고서 URL은 순회하지 않습니다. 반환된 URL만 사용합니다. 인증 후 화면·영상 재생 E2E까지 의미하지 않습니다.
-- `failed`: 입력·생성·배포·검증 실패를 답변에 기록합니다. 개발 goal은 완료할 수 있습니다. `deployment_status=failed`/`deployed=false`는 이번 시도에서 원격 적용 전 실패, `applied_unverified`/`true`는 적용 확인 후 검사 실패, `unknown`/`null`은 원격 적용 여부 미확인입니다. 시간 초과에는 해당 후보의 마지막 단계 기록을 사용하고 확인할 수 없으면 unknown으로 남깁니다.
+- `failed`: 입력·생성·배포·검증 실패를 답변에 기록합니다. 개발 goal은 완료할 수 있습니다. `deployment_status=failed`/`deployed=false`는 이번 시도에서 원격 적용 전 실패, `applied_unverified`/`true`는 적용 확인 후 검사 실패, `unknown`/`null`은 원격 적용 여부 미확인입니다. `not_applied`/`false`도 원격 적용 단계 전에 중단된 시도입니다. 시간 초과에는 해당 후보의 마지막 단계 기록을 사용하고 확인할 수 없으면 unknown으로 남깁니다.
 - `excluded`: 유형·goal 연결·완료 준비 중 하나가 자격을 충족하지 않아 이번 호출에서 게시하지 않았습니다. 배포 실패가 아니며 URL을 반환하지 않습니다. 유효한 입력은 로컬 미리보기로 유지하고, 결과에는 로컬 Markdown 링크를 반환하며 배포 실패 문구를 붙이지 않습니다. 기존 원격 문서의 삭제나 이전 업로드가 없었다는 의미는 아닙니다.
 - `content_status=not-run`: 별도 Access 열람 인증이 없어 인증 후 본문 검사를 실행하지 않았습니다. 완료 답변에도 미실행을 표시합니다. `protection_scope=unresolved`이면 현재 경로의 차단과 별개로 실제 Access 정책 전체 범위가 미확정입니다.
 - `answer_check=passed`: 출력 답변이 현재 기록과 일치합니다. 검사 후 답변 변경은 재검사해야 합니다.
 - 프로세스 자체의 읽기/쓰기 오류, 실제 ID 누락, 비활성/손상 설정은 종료 코드 1이 될 수 있습니다. 파일이 생성되지 않았다면 보고서 실패를 직접 밝히고 개발 완료와 구분합니다.
 
-`prepare-report`는 보고서를 로컬 생성하며 성공 또는 대상 제외 시 0, 실패 시 1을 반환합니다. 실제 goal 필드를 담은 중간 보고서도 로컬로 생성하며 완료 준비 기록을 만들지 않습니다. `prepare-completion`은 배포 실패를 처리하고 유효한 실패 답변까지 생성한 경우 종료 코드 0을 반환합니다. 대상 제외도 0이며 성공 여부는 `report_status`로 판단합니다. `publish/retry`는 대상 제외 시 0, 배포 실패 시 1, `check-final`은 실패 시 2입니다. 어떤 명령도 Telegram을 보내거나 goal 상태를 변경하지 않습니다.
+`prepare-report`는 보고서를 로컬 생성하며 성공 또는 대상 제외 시 0, 실패 시 1을 반환합니다. 단, 이미 `prepare-completion`으로 완료 준비가 봉인된 goal 보고서는 배포까지 진행합니다. 실제 goal 필드를 담은 중간 보고서도 로컬로 생성하며 완료 준비 기록을 만들지 않습니다. `prepare-completion`은 배포 실패를 처리하고 유효한 실패 답변까지 생성한 경우 종료 코드 0을 반환합니다. 대상 제외도 0이며 성공 여부는 `report_status`로 판단합니다. `publish/retry`는 대상 제외 시 0, 배포 실패 시 1, `check-final`은 실패 시 2입니다. 어떤 명령도 Telegram을 보내거나 goal 상태를 변경하지 않습니다.
 
 ## 사용자가 직접 요청한 게시
 
@@ -39,13 +39,13 @@ $settings = Get-Content -Raw "$env:USERPROFILE/.codex/goal-report/settings.json"
 
 개별 보고서와 두 단계 목록의 제목·본문에는 리디바탕을, 소제목과 보조 정보에는 기존 산세리프를 사용합니다. 온라인 보고서와 목록은 같은 사이트의 `fonts/ridibatang/v1/`에 있는 원본 폰트와 라이선스를 참조합니다. 새 보고서마다 같은 공용 URL을 사용하며, 파일은 누적 게시 자산에 보존합니다. 버전 경로의 기존 바이트가 다르면 덮어쓰지 않습니다.
 
-로컬·오프라인 보고서는 CSS의 `local()`로 시스템에 설치된 리디바탕을 사용하고 폰트·라이선스 파일을 동봉하거나 폰트를 다운로드하지 않습니다. 설치된 리디바탕을 사용할 수 없으면 기존 명조 대체 글꼴을 사용합니다. 같은 로컬 보고서를 다시 생성할 때는 해당 보고서에 이전 생성기가 동봉한 것으로 확인한 폰트·라이선스만 제거하며, 다른 보고서와 사용자가 추가한 파일은 보존합니다.
+로컬·오프라인 보고서는 CSS의 `local()`로 시스템에 설치된 리디바탕을 사용하고 폰트·라이선스 파일을 동봉하거나 폰트를 다운로드하지 않습니다. 설치된 리디바탕을 사용할 수 없으면 기존 명조 대체 글꼴을 사용합니다. 단, `rebuild-local-catalogue`는 확정 게시 원본의 자산을 previews에 채우므로 공용 폰트 파일이 함께 복사될 수 있습니다. 같은 로컬 보고서를 다시 생성할 때는 해당 보고서에 이전 생성기가 동봉한 것으로 확인한 폰트·라이선스만 제거하며, 다른 보고서와 사용자가 추가한 파일은 보존합니다.
 
 보고서의 캐시 저장 금지와 접근 제한은 유지하고 공용 폰트 경로만 브라우저 캐시를 허용합니다. 현재 보고서가 참조하는 공용 폰트·라이선스는 변경 여부와 관계없이 보호·콘텐츠 검사 대상이며, 원본과 공용 출력 파일 모두 준비·검증 기록에 연결합니다. 폰트의 배포 목록 포함, 실제 파일 업로드, 브라우저 다운로드는 구분해 보고합니다.
 
 ## 입력과 근거
 
-[일반 manifest 예시](examples/standalone-report-manifest.json)의 schema_version=1을 사용합니다. `project` slug, 제목·결론·검증 결과가 필요하며 `kind`는 implementation/game/research/verification입니다. `thread_id`는 선택 메타데이터입니다. `goal_id`, `goal_created_at_ms`, `report_id`는 필요하지 않습니다.
+[일반 manifest 예시](examples/standalone-report-manifest.json)의 schema_version=1을 사용합니다. `project` slug, 제목·결론·검증 결과가 필요하며 `kind`는 implementation/game/research/verification입니다. `thread_id`는 선택 메타데이터입니다. `goal_id`, `goal_created_at_ms`는 필요하지 않으며, `report_id`는 자동 생성하므로 넣으면 거부됩니다.
 
 `report_type`은 문서의 목적이며 `kind`는 내용 형식입니다. 자동 업로드는 `report_type=implementation_completion`, `kind=implementation` 또는 `game`, 실제 goal 신원, 유효한 완료 준비 봉인을 모두 충족해야 합니다. 명시 게시도 같은 구현 완료 보고서 유형·내용 형식을 요구하며 별도 사용자 지시와 게시 승인 봉인을 검증합니다. 다른 유형은 `specification`, `implementation_plan`, `verification_report`, `research_report`, `other`입니다. 유형 누락은 `other`로 처리하고 업로드하지 않습니다. `implementation_completion`과 연구·검증 형식의 조합은 잘못된 입력으로 거부합니다. 제목의 "완료"나 goal 완료 상태만으로 업로드 자격을 추정하지 않습니다.
 
@@ -53,7 +53,7 @@ $settings = Get-Content -Raw "$env:USERPROFILE/.codex/goal-report/settings.json"
 
 일반 보고서 ID는 저장소에서 자동 생성하고 `report-sources/<입력 파일 경로 해시>.json`에 보관합니다. 같은 입력 파일 경로는 같은 보고서를 갱신·복구하며, 새 보고서에는 새 입력 파일을 사용합니다. 입력 원본은 수정하지 않습니다. 같은 입력 파일의 project 변경은 기존 주소를 혼동하지 않도록 거부합니다. 실행 결과에 key가 반환되므로 필요하면 복구 명령에서 사용합니다.
 
-goal 완료 경로만 [goal manifest 예시](examples/report-manifest.json)의 실제 `thread_id`, `goal_id`와 생성 시각을 요구합니다. 기존 goal 보고서의 key·URL은 유지합니다. 현재 작업에 goal이 없으면 검증용으로 가짜 ID나 goal을 만들지 않습니다.
+goal 완료 경로만 [goal manifest 예시](examples/report-manifest.json)의 실제 `thread_id`, `goal_id`를 요구합니다. 생성 시각(`goal_created_at_ms`)은 런타임이 goal DB에서 확인하므로 넣지 않습니다. 넣으면 DB 값과 정확히 같아야 하며 다르면 실패합니다. 기존 goal 보고서의 key·URL은 유지합니다. 현재 작업에 goal이 없으면 검증용으로 가짜 ID나 goal을 만들지 않습니다.
 
 goal 완료 표시 전에 로컬 goal DB에서 정확한 thread/goal ID와 생성 시각을 확인합니다. `completion_ready=true`는 생산자가 개발 작업과 필요한 검증을 완료했다는 선언이며, `prepare-completion`만 `identity.json` 및 입력·미디어·구현·게시 대상 fingerprint에 연결된 `readiness.json`을 생성합니다. DB 신원을 확인하지 못하면 게시하지 않습니다. manifest의 임의 readiness 필드나 ID/생성 시각만으로 게시할 수 없습니다. tests의 passed/failed/not-run은 그대로 보존합니다. 입력·근거·대상이 변경되면 다시 최종화해야 합니다. 준비 시 확인한 신원을 보관하므로 goal 완료로 DB 행이 사라진 뒤 같은 보고서를 복구할 수 있습니다.
 
@@ -63,7 +63,7 @@ tests는 passed/failed/not-run 및 조건·근거·미실행 사유를 포함합
 
 새 보고서와 전체 프로젝트·프로젝트별 보고서 목록은 배경 `#FAF9F5`와 기본 글자 `#141413`을 운영체제 테마와 관계없이 유지하는 에디토리얼 형식입니다. 목록에는 전용 `catalogue-theme.css`를 사용하고 새 보고서에는 보고서별 스타일 파일을 사용합니다. 기존 개별 보고서가 참조하는 공유 `theme.css`와 기존 본문·미디어·주소는 유지하며, 기존 게시 보고서를 이 형식으로 일괄 재작성하지 않습니다.
 
-전체 프로젝트 목록은 이름순이며, 프로젝트 안의 보고서 목록은 저장된 `publication_order`의 내림차순입니다. 새 보고서에만 게시 후보 생성 시 기존 최대 순번 다음 값을 배정하고, 게시 성공 시 같은 순번을 원장에 보관합니다. 기존 보고서의 재검증·재배포·입력 재제출·누적 묶음 포함은 순번을 바꾸지 않습니다. 로컬 생성·온라인 후보·로컬 목록 재구성이 같은 발행 메타데이터를 사용하며, 입력 manifest의 임의 값으로 발행 이력을 만들지 않습니다.
+전체 프로젝트 목록은 canonical project slug 순이며, 프로젝트 안의 보고서 목록은 저장된 `publication_order`의 내림차순입니다. 새 보고서에만 게시 후보 생성 시 기존 최대 순번 다음 값을 배정하고, 게시 성공 시 같은 순번을 원장에 보관합니다. 기존 보고서의 재검증·재배포·입력 재제출·누적 묶음 포함은 순번을 바꾸지 않습니다. 로컬 생성·온라인 후보·로컬 목록 재구성이 같은 발행 메타데이터를 사용하며, 입력 manifest의 임의 값으로 발행 이력을 만들지 않습니다.
 
 발행 정보가 없던 과거 자료는 확인 가능한 게시 기록을 근거로 한 번 순서를 정해 저장합니다. 이 순서는 남아 있는 게시 확인 기록에 따른 추정이며 최초 발행 순서의 완전한 복원을 의미하지 않습니다. 발행 근거가 없는 항목과 미발행 로컬 보고서는 하단에서 내부 키 순으로 안정 배치합니다. goal 시작 시각·파일 수정 시각·후보 준비 시각을 과거 발행일로 사용하지 않으며, 내부 순번이나 추적 값은 공개 본문에 표시하지 않습니다.
 
@@ -75,7 +75,7 @@ tests는 passed/failed/not-run 및 조건·근거·미실행 사유를 포함합
 
 ## hook의 책임과 한계
 
-SessionStart는 구현 완료 보고서에만 적용되는 패키지 스킬을 제공합니다. 지원되는 update_goal 도구의 PreToolUse는 준비된 구현 완료 보고서가 있을 때 실제 현재 goal과 준비 기록을 대조합니다. 성공·실패 기록 모두 완료를 허용합니다. PostToolUse는 그 호출이 실제 완료됐는지 확인하고, Stop은 해당 turn에 준비·완료된 구현 goal의 답변만 검사합니다. goal 행이 사라져도 완료 전 캡처한 ID와 완료 응답을 대조합니다. 불일치하면 추정하지 않습니다.
+SessionStart는 구현 완료 보고서에만 적용되는 패키지 스킬을 제공합니다. 지원되는 update_goal 도구의 PreToolUse는 준비된 구현 완료 보고서가 있을 때 실제 현재 goal과 준비 기록을 대조합니다. 성공·실패 기록 모두 완료를 허용합니다. 단, `verified` 기록의 산출물이 준비 후 바뀌었으면 완료를 거부하므로 `prepare-completion`을 다시 실행합니다. PostToolUse는 그 호출이 실제 완료됐는지 확인하고, Stop은 해당 turn에 준비·완료된 구현 goal의 답변만 검사합니다. goal 행이 사라져도 완료 전 캡처한 ID와 완료 응답을 대조합니다. 불일치하면 추정하지 않습니다.
 
 준비 기록이 없으면 구현 완료에만 절차가 필요하다는 안내를 제공하며 모든 goal을 일괄 차단하지 않습니다. hook 입력에는 업무 유형이 없으므로 목표 문구로 구현 여부를 추측하지 않습니다. 문서 goal이나 대상 제외 기록에는 링크·실패 답변 의무를 만들지 않습니다. 구현 goal의 준비 누락을 hook만으로 강제할 수 없으므로 전역 AGENTS와 스킬의 명시적 완료 전 절차가 기준입니다.
 
@@ -99,11 +99,29 @@ SessionStart는 구현 완료 보고서에만 적용되는 패키지 스킬을 �
 
 기존 `root`와 `public/projects/<project>/<key>/` 경로를 유지합니다. 입력, 신원, 작업·검증·완료·turn 기록은 public 밖에 둡니다. 누적 자산을 보존하며 자동 삭제하지 않습니다. 전역 notify는 기본 complete/blocked 알림만 보내고 보고서 배포·추가 링크 메시지를 수행하지 않습니다.
 
-입력/환경 문제를 해결하고 동일 manifest·원래 초안으로 `prepare-completion`을 다시 실행합니다. 유효한 검증은 재사용합니다. 수동 배포 복구는 `retry --key <실제 key>`이며 Telegram을 보내지 않습니다. 이전 `--notify`, `--ack-unsent` 옵션은 제거했습니다. 이미 전달된 구형 보고서의 입력 변경은 기존 보호를 유지합니다.
+goal 완료 전에는 입력/환경 문제를 해결하고 동일 manifest·원래 초안으로 `prepare-completion`을 다시 실행합니다. 유효한 검증은 재사용합니다. `retry`는 완료 기록(`completions/<key>.json`)을 갱신하지 않으므로 이 복구에 쓰지 않습니다. goal 완료 후에는 `prepare-completion`을 다시 실행하면 DB 신원 확인에 실패해 기존 기록이 실패로 덮어써지므로, `retry --key <실제 key>`로 배포만 복구합니다. 수동 배포 복구는 Telegram을 보내지 않습니다. 이전 `--notify`, `--ack-unsent` 옵션은 제거했습니다. 이미 전달된 구형 보고서의 입력 변경은 기존 보호를 유지합니다.
+
+## PC 설정
+
+`~/.codex/goal-report/settings.json`(환경 변수 `CODEX_REPORT_CONFIG`로 다른 경로 지정 가능)의 키입니다.
+
+| 키 | 구분 | 내용 |
+| --- | --- | --- |
+| `enabled` | 필수 | `true`일 때만 보고서 절차와 hook이 동작합니다. |
+| `root` | 필수 | 보고서 저장소의 절대 경로 |
+| `base_url` | 필수 | 게시 주소. 경로·쿼리 없는 `https` 주소 |
+| `python` | 필수 | CLI와 Windows hook을 실행할 Python 경로 |
+| `account`, `worker_id`, `worker_name`, `access_host` | 게시 시 필수 | Cloudflare 계정·Worker·Access 호스트 |
+| `wrangler`, `wrangler_version`, `compatibility_date` | 게시 시 필수 | Wrangler 패키지 폴더(`bin/wrangler.js` 포함)와 버전, Worker 호환 날짜 |
+| `node` | 선택 | Node 실행 파일. 기본 `node` |
+| `goal_database` | 선택 | goal DB 경로. 기본은 `root` 상위 폴더의 `goals_1.sqlite` 또는 `sqlite/goals_1.sqlite` |
+| `ffmpeg`, `ffprobe` | 선택 | 미디어 도구 경로. 환경 변수 `CODEX_REPORT_FFMPEG`·`CODEX_REPORT_FFPROBE`가 우선하며, 없으면 PATH에서 찾습니다. |
+| `deployment_timeout_seconds` | 선택 | 배포 전체 시간 예산. 기본 300초, 최대 900초 |
+| `config_path` | 선택 | 실제 설정을 다른 파일에서 읽을 때 그 경로 |
 
 ## 설치·전환·롤백
 
-저장소의 `install_goal_report.py`는 패키지를 버전 단위로 설치하고 단일 설정을 이전합니다. 같은 버전의 다른 바이트는 덮어쓰지 않습니다. 수정 배포는 plugin.json 버전을 올립니다. 이어 `codex plugin add goal-report@personal --json`으로 등록합니다. 실행 중인 세션의 새 hook 반영과 신뢰 검토는 별개이며 기존 세션을 임의로 재시작하지 않습니다.
+저장소의 `install_goal_report.py`는 패키지를 버전 단위로 설치하고 단일 설정을 이전합니다. 같은 버전의 다른 바이트는 덮어쓰지 않습니다. 수정 배포는 plugin.json 버전을 올립니다. 이어 `codex plugin add goal-report@kindtis-skills --json`으로 등록합니다. 실행 중인 세션의 새 hook 반영과 신뢰 검토는 별개이며 기존 세션을 임의로 재시작하지 않습니다.
 
 보고서 형식이나 버전만 갱신하고 기존 전역 지침을 보존할 때는 `install_goal_report.py --preserve-instructions`를 사용합니다. 이 옵션은 전역 `AGENTS.md`의 쓰기만 건너뛰며 패키지 스킬·설정·호환 진입점·등록 정보는 정상 갱신합니다. 옵션을 생략한 기존 설치 동작은 유지합니다.
 
@@ -117,7 +135,7 @@ root의 프로젝트명·보고서 수 목록에서 `/projects/<canonical-projec
 
 `public`/`published.json`/게시 원본 보관은 원격 확정 기준입니다. 로컬 전체 목록을 새로 만들 때는 확정 원본을 `previews`로 복사하고 목록·탐색 링크만 갱신합니다. no-goal 작업을 이유로 원격 확정 기준이나 과거 성공 receipt를 덮어쓰지 않습니다. 다음 적격 goal 게시 후보에서 nav 이전을 포함해 원격 적용할 수 있습니다.
 
-기존 로컬 전체 목록 재구성은 `reportctl.py rebuild-local-catalogue`로 실행합니다. 확정 게시 원본의 해시를 확인하여 previews에 없는 자산만 채우고 nav/index만 재생성합니다. 기존 로컬 미리보기 본문·미디어는 유지하며 목록 제목·결론은 실제 유지되는 페이지를 기준으로 합니다. 제출만 갱신되고 아직 렌더되지 않은 입력은 목록 내용을 바꾸지 않습니다. public, published.json, verification은 유지하며 인증이나 원격 요청이 없습니다. 기존 local-only 보고서도 함께 분류합니다. `goal_created_at_ms`는 예시의 고정 숫자를 사용하지 않고 실제 DB에서 확보합니다. 선택 project_origin은 확인 가능한 실제 경로가 있을 때만 입력합니다.
+기존 로컬 전체 목록 재구성은 `reportctl.py rebuild-local-catalogue`로 실행합니다. 확정 게시 원본의 해시를 확인하여 previews에 없는 자산만 채우고 nav/index만 재생성합니다. 기존 로컬 미리보기 본문·미디어는 유지하며 목록 제목·결론은 실제 유지되는 페이지를 기준으로 합니다. 제출만 갱신되고 아직 렌더되지 않은 입력은 목록 내용을 바꾸지 않습니다. public, published.json, verification은 유지하며 인증이나 원격 요청이 없습니다. 기존 local-only 보고서도 함께 분류합니다. `goal_created_at_ms`는 넣지 않으며 런타임이 실제 DB에서 확인합니다. 선택 project_origin은 확인 가능한 실제 경로가 있을 때만 입력합니다.
 
 1.4.1의 `rebuild-local-catalogue` CLI는 기존 `store.lock`으로 전체 로컬 재구성을 직렬화하여 다른 세션의 입력 저장·렌더와 겹치지 않습니다. 1.4.0 등 기존 설치 버전은 덮어쓰지 않습니다.
 
