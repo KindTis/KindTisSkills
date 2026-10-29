@@ -1,0 +1,8 @@
+{
+  "hooks": {
+    "SessionStart": [{"matcher":"startup|resume|compact|clear","hooks":[{"type":"command","command":"python3 ${PLUGIN_ROOT}/runtime/lifecycle.py","commandWindows":"powershell.exe -NoProfile -NonInteractive -File \"${PLUGIN_ROOT}/runtime/hook.ps1\"","timeout":15}]}],
+    "PreToolUse": [{"matcher":"(^|[.:_])update_goal$","hooks":[{"type":"command","command":"python3 ${PLUGIN_ROOT}/runtime/lifecycle.py","commandWindows":"powershell.exe -NoProfile -NonInteractive -File \"${PLUGIN_ROOT}/runtime/hook.ps1\"","timeout":15}]}],
+    "PostToolUse": [{"matcher":"(^|[.:_])update_goal$","hooks":[{"type":"command","command":"python3 ${PLUGIN_ROOT}/runtime/lifecycle.py","commandWindows":"powershell.exe -NoProfile -NonInteractive -File \"${PLUGIN_ROOT}/runtime/hook.ps1\"","timeout":15}]}],
+    "Stop": [{"hooks":[{"type":"command","command":"python3 ${PLUGIN_ROOT}/runtime/lifecycle.py","commandWindows":"powershell.exe -NoProfile -NonInteractive -File \"${PLUGIN_ROOT}/runtime/hook.ps1\"","timeout":15}]}]
+  }
+}

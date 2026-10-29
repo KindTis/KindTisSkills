@@ -1,0 +1,11 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "goal-report",
+  "version": "1.4.8",
+  "description": "프로젝트별 보고서와 공용 글꼴을 관리합니다. 자동 게시는 실제 goal 완료 준비를 확인하고, 별도 사용자 직접 게시 요청은 해당 구현 보고서와 후보에 연결하여 처리합니다.",
+  "extensions": {
+    "com.openai": {
+      "hooks": "./hooks/hooks.json"
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "report_type": "implementation_completion",
+  "thread_id": "REPLACE_WITH_ACTUAL_MAIN_THREAD_ID",
+  "goal_id": "REPLACE_WITH_ACTUAL_GOAL_ID",
+  "project": "example-project",
+  "kind": "implementation",
+  "title": "구현 완료 보고서",
+  "conclusion": "무엇을 완료했고 이제 무엇이 가능한지 한두 문장으로 설명하세요.",
+  "evidence_root": ".",
+  "changes": [
+    "사용자에게 달라진 동작을 적으세요."
+  ],
+  "tests": [
+    {
+      "name": "실행한 검증",
+      "status": "passed",
+      "details": "확인한 사용자 흐름과 필요한 조건, 실제 결과를 짧게 적으세요."
+    },
+    {
+      "name": "실기기 확인",
+      "status": "not-run",
+      "details": "실행하지 못한 이유와 남은 확인을 적으세요."
+    }
+  ],
+  "caveats": [
+    "결과를 해석할 때 필요한 제한을 적으세요."
+  ],
+  "sections": [
+    {
+      "title": "확인 방법",
+      "text": "결과를 이해하는 데 필요한 확인 절차를 짧게 설명하세요. SHA, 내부 ID, 긴 경로와 상세 로그는 본문에서 제외하고 내부 기록에 보관하세요."
+    }
+  ],
+  "media": [],
+  "tables": [
+    {
+      "title": "조건별 비교",
+      "columns": [
+        "조건",
+        "결과",
+        "상태"
+      ],
+      "rows": [
+        [
+          "실행 조건",
+          "실제 측정 결과",
+          "통과"
+        ]
+      ],
+      "conditions": "같은 입력과 실행 환경",
+      "source": "실제 검증 기록"
+    }
+  ],
+  "charts": [],
+  "completion_ready": true
+}

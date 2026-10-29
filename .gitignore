@@ -1,0 +1,15 @@
+# Python 실행 캐시와 가상 환경
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# 로컬 환경 변수와 인증 자료
+.env
+.env.*
+!.env.example
+!.env.sample
+
+# 운영체제 임시 파일
+.DS_Store
+Thumbs.db

@@ -1,0 +1,44 @@
+{
+  "name": "kindtis-skills",
+  "interface": {
+    "displayName": "KindTisSkills"
+  },
+  "plugins": [
+    {
+      "name": "goal-report",
+      "source": {
+        "source": "local",
+        "path": "./plugins/goal-report"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "improve",
+      "source": {
+        "source": "local",
+        "path": "./plugins/improve"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "jira",
+      "source": {
+        "source": "local",
+        "path": "./plugins/jira"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

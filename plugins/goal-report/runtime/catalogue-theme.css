@@ -1,0 +1,58 @@
+/* 목록 전용 에디토리얼 테마. 개별 보고서와 구형 theme.css에는 적용하지 않습니다. */
+@font-face {
+  font-family: "RIDIBatang";
+  src: url("fonts/ridibatang/v1/RIDIBatang.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+:root {
+  color-scheme: light;
+  --catalogue-paper: #faf9f5;
+  --catalogue-ink: #141413;
+  --catalogue-muted: #605e57;
+  --catalogue-rule: #ddd9ce;
+  --catalogue-accent: #a8553a;
+  --catalogue-serif: "RIDIBatang", "Batang", "바탕", Georgia, "Times New Roman", serif;
+  --catalogue-sans: "Malgun Gothic", "맑은 고딕", "Segoe UI", sans-serif;
+  background: var(--catalogue-paper);
+  color: var(--catalogue-ink);
+}
+body { margin: 0; background: var(--catalogue-paper); color: var(--catalogue-ink); }
+.catalogue {
+  box-sizing: border-box;
+  max-width: 840px;
+  margin: 0 auto;
+  padding: 46px clamp(24px, 5vw, 60px) 64px;
+  font-family: var(--catalogue-serif);
+  font-size: 18px;
+  line-height: 1.95;
+  letter-spacing: -0.025em;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.catalogue *, .catalogue *::before, .catalogue *::after { box-sizing: border-box; }
+.catalogue :where(h1, h2, p, ul) { margin: 0; }
+.catalogue nav { margin-bottom: 34px; font-family: var(--catalogue-sans); font-size: 13px; line-height: 1.8; }
+.catalogue nav a { color: var(--catalogue-accent); text-decoration: underline; text-underline-offset: 3px; }
+.catalogue header { padding: 15px 0 37px; border-bottom: 1px solid var(--catalogue-rule); text-align: center; }
+.catalogue-kind { margin-bottom: 17px; color: var(--catalogue-accent); font-family: var(--catalogue-sans); font-size: 13px; font-weight: 600; line-height: 1.8; letter-spacing: 0.065em; }
+.catalogue h1 { color: var(--catalogue-ink); font-family: var(--catalogue-serif); font-size: clamp(32px, 4.2vw, 42px); font-weight: 400; line-height: 1.55; letter-spacing: -0.055em; text-wrap: balance; }
+.catalogue-meta { margin-top: 23px; color: var(--catalogue-muted); font-family: var(--catalogue-sans); font-size: 13px; line-height: 1.8; letter-spacing: 0; }
+.catalogue .report-list { padding: 0; list-style: none; }
+.catalogue .report-list > li { padding: 27px 0 29px; border-bottom: 1px solid var(--catalogue-rule); }
+.catalogue h2 { color: var(--catalogue-ink); font-family: var(--catalogue-serif); font-size: 23px; font-weight: 400; line-height: 1.7; letter-spacing: -0.035em; }
+.catalogue h2 a { color: inherit; text-decoration: none; }
+.catalogue h2 a:hover { color: var(--catalogue-accent); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.catalogue a:focus-visible { outline: 2px solid var(--catalogue-accent); outline-offset: 5px; }
+.catalogue-conclusion { margin-top: 11px; color: var(--catalogue-muted); font-size: 17px; line-height: 1.95; }
+.catalogue-count { margin-top: 9px; color: var(--catalogue-muted); font-family: var(--catalogue-sans); font-size: 13px; line-height: 1.85; letter-spacing: 0; }
+@media (max-width: 480px) {
+  .catalogue { padding: 29px 24px 42px; }
+  .catalogue nav { margin-bottom: 24px; }
+  .catalogue header { padding-top: 12px; padding-bottom: 29px; }
+  .catalogue h1 { font-size: 32px; line-height: 1.6; }
+  .catalogue .report-list > li { padding: 23px 0 25px; }
+  .catalogue h2 { font-size: 21px; line-height: 1.8; }
+  .catalogue-conclusion { font-size: 16px; }
+}
