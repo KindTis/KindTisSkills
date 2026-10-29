@@ -9,7 +9,7 @@
 | [.agents/plugins/marketplace.json](.agents/plugins/marketplace.json) | `kindtis-skills` 마켓플레이스와 선택 설치 목록 | — |
 | [AGENTS.md](AGENTS.md) | 전역 작업 지침 전체 사본 | 2026-10-29 기준 |
 | [plugins/goal-report](plugins/goal-report) | 구현 완료 보고서 스킬, 실행 코드, hook, 예시, 글꼴 | 1.4.8 |
-| [plugins/improve](plugins/improve) | 명세 검토·개선 및 확정 명세 구현 스킬, 참조 문서, 테스트 자료 | 1.1.0 |
+| [plugins/improve](plugins/improve) | 명세 검토·개선 및 확정 명세 구현 스킬, 참조 문서, 테스트 자료 | 1.1.1 |
 | [plugins/jira](plugins/jira) | Jira 에픽·명세·개발·상태 관리 스킬과 참조 문서 | 1.3.0 |
 
 ## 마켓플레이스 등록과 설치

@@ -1,6 +1,6 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "improve",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "명세의 독립 리뷰·개선과 불변 명세 기반 계획·구현·검증을 분리한다."
 }
