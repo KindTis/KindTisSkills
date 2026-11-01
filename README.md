@@ -12,7 +12,7 @@
 | [archive](archive) | 플러그인에서 분리한 과거 기록(설치 대상 아님) | — |
 | [plugins/goal-report](plugins/goal-report) | 구현 완료 보고서 스킬, 실행 코드, hook, 예시, 글꼴 | 1.4.9 |
 | [plugins/improve](plugins/improve) | 명세 검토·개선 및 확정 명세 구현 스킬, 참조 문서, 테스트 자료 | 1.1.2 |
-| [plugins/jira](plugins/jira) | Jira 에픽·명세·개발·상태 관리 스킬과 참조 문서 | 1.3.1 |
+| [plugins/jira](plugins/jira) | Jira 자연어 요청 진입점과 에픽·명세·개발·상태 관리 절차 | 1.4.0 |
 
 ## 마켓플레이스 등록과 설치
 
@@ -31,7 +31,24 @@ codex plugin add improve@kindtis-skills
 codex plugin add jira@kindtis-skills
 ```
 
-jira는 improve 플러그인과 superpowers 플러그인의 `brainstorming` 스킬이 필요하며, worktree 작업을 지시하면 `using-git-worktrees`도 사용합니다. improve는 설치되어 있으면 superpowers의 `writing-plans`·`executing-plans`·`using-git-worktrees`와 ponytail의 `ponytail-review`를 보조로 사용합니다.
+jira의 명세 구체화·준비에는 superpowers 플러그인의 `brainstorming`, 단일 이슈 구현에는 improve 플러그인이 필요합니다. worktree 작업을 지시하면 `using-git-worktrees`도 사용합니다. improve는 설치되어 있으면 superpowers의 `writing-plans`·`executing-plans`·`using-git-worktrees`와 ponytail의 `ponytail-review`를 보조로 사용합니다.
+
+Jira 작업의 공통 진입점은 **`jira:manage`**입니다. 세부 스킬 이름을 지정하지 않고 다음처럼 요청할 수 있습니다.
+
+| 요청 예시 | 담당 절차 |
+| --- | --- |
+| 이 명세를 Jira로 발행해 | `spec-ticket` + `status` |
+| JIRA-1을 구체화해 | `specify` + `status` |
+| 단일 이슈 JIRA-1을 구현해 | `work` + `status` |
+| 이 요구를 에픽과 하위 이슈로 등록해 | `epic` + `status` |
+| 에픽 JIRA-10을 실행해 | `epic` + `status` |
+| JIRA-1 내용을 설명해 | 조회·설명 |
+
+`manage`는 요청에 필요한 지침 조합만 선택하는 라우터입니다. 작업 에이전트가 선택된 업무 지침과 `status`의 상태·댓글 지침을 각각 적용합니다. 업무 스킬은 자기 작업을 수행하며 `manage`나 `status`를 호출하거나 보고하지 않습니다. 조회·설명은 Jira를 변경하지 않고, 발행·구체화 요청만으로 구현을 시작하지 않습니다.
+
+명시적으로 실행할 때는 사용자가 필요한 스킬을 함께 지정합니다. 예: `$jira:specify $jira:status로 JIRA-1을 구체화해`. 업무 스킬만 지정한 요청에 `manage`나 `status`를 자동으로 추가하지 않습니다.
+
+`epic`은 큰 작업의 분해·작업별 명세와 이슈 발급을 맡고, 실행 요청에는 의존성에 맞춰 작업 에이전트에게 `work`를 배정합니다. `work`는 배정된 단일 이슈의 명세 확인·구현·검증을 담당합니다. 준비·등록만 요청하면 그 범위를 유지하고, 기존 에픽 실행 요청에 다시 분해·등록을 강제하지 않습니다.
 
 데스크톱 앱에서는 등록 후 앱을 다시 시작하고 플러그인 디렉터리에서 **KindTisSkills** 마켓플레이스를 선택해 원하는 플러그인을 설치합니다.
 
