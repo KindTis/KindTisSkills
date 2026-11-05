@@ -13,7 +13,7 @@ description: Review and improve software or game specifications through independ
 
 ## Roles and dispatch
 
-[공유 역할과 위임](../../references/roles-and-dispatch.md)을 따른다. 명세 리뷰는 기획자(Planner)와 프로그래머(Programmer)의 독립 리뷰다. 두 리뷰어는 같은 불변 스냅샷을 읽고 최초 결과를 서로 보지 않는다. 리뷰어는 읽기 전용이며 정본 명세의 작성·수정은 주 에이전트가 맡는다. 불변 스냅샷은 해당 리뷰 회차의 비교 기준이며, 주 에이전트가 정본 명세를 개선하지 못하게 하는 제한이 아니다.
+명세 리뷰는 기획자(Planner)와 프로그래머(Programmer)의 독립 리뷰다. 두 리뷰어는 같은 불변 스냅샷을 읽고 최초 결과를 서로 보지 않는다. 리뷰어는 읽기 전용이며 정본 명세의 작성·수정은 주 에이전트가 맡는다. 불변 스냅샷은 해당 리뷰 회차의 비교 기준이며, 주 에이전트가 정본 명세를 개선하지 못하게 하는 제한이 아니다.
 
 ## Reference router
 
