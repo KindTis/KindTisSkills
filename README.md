@@ -7,12 +7,12 @@
 | 경로 | 내용 | 버전 |
 | --- | --- | --- |
 | [.agents/plugins/marketplace.json](.agents/plugins/marketplace.json) | `kindtis-skills` 마켓플레이스와 선택 설치 목록 | — |
-| [AGENTS.md](AGENTS.md) | 전역 작업 지침 전체 사본 | 2026-11-03 기준 |
+| [AGENTS.md](AGENTS.md) | 전역 작업 지침 전체 사본 | 2026-11-06 기준 |
 | [agents](agents) | Codex 커스텀 역할 설정(Advisor·Art Director·Planner·Programmer·Implementer·Tester·Watchdog) | — |
 | [archive](archive) | 플러그인에서 분리한 과거 기록(설치 대상 아님) | — |
 | [plugins/goal-report](plugins/goal-report) | 구현 완료 보고서 스킬, 실행 코드, hook, 예시, 글꼴 | 1.4.9 |
-| [plugins/improve](plugins/improve) | 명세 검토·개선 및 확정 명세 구현 스킬, 참조 문서, 테스트 자료 | 1.1.3 |
-| [plugins/jira](plugins/jira) | Jira 자연어 요청 진입점과 에픽·명세·개발·상태 관리 절차 | 1.4.0 |
+| [plugins/improve](plugins/improve) | 명세 검토·개선 및 확정 명세 구현 스킬, 참조 문서, 테스트 자료 | 1.1.4 |
+| [plugins/jira](plugins/jira) | Jira 자연어 요청 진입점과 에픽·명세·개발·상태 관리 절차 | 1.4.1 |
 
 ## 마켓플레이스 등록과 설치
 
@@ -31,7 +31,7 @@ codex plugin add improve@kindtis-skills
 codex plugin add jira@kindtis-skills
 ```
 
-jira의 명세 구체화·준비에는 superpowers 플러그인의 `brainstorming`, 단일 이슈 구현에는 improve 플러그인이 필요합니다. worktree 작업을 지시하면 `using-git-worktrees`도 사용합니다. improve는 설치되어 있으면 superpowers의 `writing-plans`·`executing-plans`·`using-git-worktrees`와 ponytail의 `ponytail-review`를 보조로 사용합니다. improve를 쓰려면 [agents](agents)의 `advisor`·`planner`·`programmer`·`implementer`·`tester` 역할이 등록되어 있어야 합니다. 리뷰 기준과 모델·추론 수준을 이 역할 설정에서 가져옵니다.
+jira의 명세 구체화·준비에는 superpowers 플러그인의 `brainstorming`, 단일 이슈 구현에는 improve 플러그인이 필요합니다. worktree 작업을 지시하면 `using-git-worktrees`도 사용합니다. improve는 설치되어 있으면 superpowers의 `writing-plans`·`executing-plans`·`using-git-worktrees`와 ponytail의 `ponytail-review`를 보조로 사용합니다. improve를 쓰려면 [agents](agents)의 `advisor`·`planner`·`programmer`·`implementer`·`tester` 역할이 등록되어 있어야 합니다. 리뷰 기준과 모델·추론 수준을 이 역할 설정에서 가져오고, 역할 분담·Advisor 자문 조건·위임 경계는 [위임 공통 계약](plugins/improve/references/delegation.md)을 따릅니다.
 
 Jira 작업의 공통 진입점은 **`jira:manage`**입니다. 세부 스킬 이름을 지정하지 않고 다음처럼 요청할 수 있습니다.
 
@@ -54,7 +54,7 @@ Jira 작업의 공통 진입점은 **`jira:manage`**입니다. 세부 스킬 이
 
 GitHub에 반영하기 전에는 이 저장소 루트에서 `codex plugin marketplace add .`로 로컬 구성을 확인할 수 있습니다. 로컬 등록과 GitHub 등록은 같은 마켓플레이스 이름을 사용하므로, GitHub 원본으로 전환할 때는 `codex plugin marketplace remove kindtis-skills`로 로컬 등록을 제거한 뒤 위의 GitHub 등록 명령을 실행합니다.
 
-전역 `AGENTS.md`와 [agents](agents)의 역할 설정 적용은 별도로 관리합니다. goal-report의 PC별 실행·배포 설정은 [REPORTING.md](plugins/goal-report/REPORTING.md)를 참고합니다. Jira 작업에는 사용 환경에서 제공하는 Jira 도구와 해당 서비스 접근 권한이 필요합니다.
+전역 `AGENTS.md`와 [agents](agents)의 역할 설정 적용은 별도로 관리합니다. 전역 지침은 위임을 지시하지 않으며, 역할은 스킬이 요구하거나 사용자가 지시할 때 사용합니다. Watchdog도 goal 감시가 필요할 때 직접 지시합니다. goal-report의 PC별 실행·배포 설정은 [REPORTING.md](plugins/goal-report/REPORTING.md)를 참고합니다. Jira 작업에는 사용 환경에서 제공하는 Jira 도구와 해당 서비스 접근 권한이 필요합니다.
 
 ## 플러그인 추가와 갱신
 

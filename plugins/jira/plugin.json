@@ -1,6 +1,6 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "jira",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "자연어 Jira 요청을 독립 업무·상태 지침으로 라우팅하고 기존 아이디어 명세화, 완성 명세 발급, 에픽 구성·작업 배정과 단일 이슈 구현·검증을 지원한다."
 }
