@@ -7,7 +7,7 @@
 | 경로 | 내용 | 버전 |
 | --- | --- | --- |
 | [.agents/plugins/marketplace.json](.agents/plugins/marketplace.json) | `kindtis-skills` 마켓플레이스와 선택 설치 목록 | — |
-| [AGENTS.md](AGENTS.md) | 전역 작업 지침 전체 사본 | 2026-11-06 기준 |
+| [AGENTS.md](AGENTS.md) | 전역 작업 지침 전체 사본 | 2026-11-11 기준 |
 | [agents](agents) | Codex 커스텀 역할 설정(Advisor·Art Director·Planner·Programmer·Implementer·Tester·Watchdog) | — |
 | [archive](archive) | 플러그인에서 분리한 과거 기록(설치 대상 아님) | — |
 | [plugins/goal-report](plugins/goal-report) | 구현 완료 보고서 스킬, 실행 코드, hook, 예시, 글꼴 | 1.4.9 |
