@@ -11,7 +11,7 @@
 | [agents](agents) | Codex 커스텀 역할 설정(Advisor·Art Director·Planner·Programmer·Implementer·Tester·Watchdog) | — |
 | [archive](archive) | 플러그인에서 분리한 과거 기록(설치 대상 아님) | — |
 | [plugins/goal-report](plugins/goal-report) | 구현 완료 보고서 스킬, 실행 코드, hook, 예시, 글꼴 | 1.4.9 |
-| [plugins/improve](plugins/improve) | 명세 검토·개선 및 확정 명세 구현 스킬, 참조 문서, 테스트 자료 | 1.1.6 |
+| [plugins/improve](plugins/improve) | 명세 검토·개선 및 확정 명세 구현 스킬, 참조 문서, 테스트 자료 | 2.0.0 |
 | [plugins/jira](plugins/jira) | Jira 자연어 요청 진입점과 에픽·명세·개발·상태 관리 절차 | 1.4.2 |
 
 ## 마켓플레이스 등록과 설치
