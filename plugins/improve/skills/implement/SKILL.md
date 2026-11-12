@@ -61,7 +61,7 @@ description: Implement a confirmed specification in rounds — an Implementer pl
 - **보이지 못한 것:** 실행하지 못한 사례와 이유. 사용자가 나중에 할 플레이·선호 확인·출시 승인은 따로 적는다. 이것을 기다리며 goal을 멈추지 않고, 돌리지 못한 필수 검증을 사용자 인수로 바꿔 완료라고 하지 않는다.
 - **작업 위치와 상태:** 작업 공간·브랜치, 변경 요약, 명세 해시 일치 여부.
 
-구현 goal의 완료 준비는 전역 `goal-completion-report` 절차를 따르고 그 배포 결과를 인계에 담는다. 보고 실패는 개발 결과와 구분한다.
+구현 goal의 완료 준비는 전역 `goal-completion-report` 절차를 따르고 그 배포 결과를 인계에 담는다.
 
 ## 도움 스킬
 
