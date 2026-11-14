@@ -1,11 +1,11 @@
 ---
 name: implement
-description: Implement a confirmed specification in rounds — an Implementer plans and builds, a Programmer rehearses the plan and checks the code against the cases, a Tester runs the selected cases — until both judges report done. Use when the user designates a confirmed specification document to implement.
+description: Use when implementing a confirmed specification through an Architect's plan, an Implementer's changes, and independent technical review and execution verification.
 ---
 
 # 확정 명세 구현
 
-확정된 명세를, 고른 사례가 모두 실행으로 보이고 코드가 사례와 제약에 맞게 만들어진 변경으로 바꾼다. Implementer가 계획하고 만들며, Programmer와 Tester가 판정하고, 두 판정자가 같은 revision에서 종료를 보고하면 끝난다.
+확정된 명세를, 고른 사례가 모두 실행으로 보이고 코드가 사례와 제약에 맞게 만들어진 변경으로 바꾼다. Architect가 계획 문안을 작성·수정하고 Implementer가 구현하며, Programmer Reviewer와 Tester가 같은 revision에서 종료를 보고하면 끝난다.
 
 ## 권한과 범위
 
@@ -16,11 +16,12 @@ description: Implement a confirmed specification in rounds — an Implementer pl
 ## 역할
 
 - **주 에이전트:** 지적에 답하고, 결정을 남기고, 계획과 기록을 파일로 저장하고, 인계한다.
-- **Implementer(`implementer`):** 만드는 쪽. 계획 초안을 내고 코드를 쓴다.
-- **Programmer(`programmer`):** 구축 축 판정. 계획을 리허설하고 코드를 사례와 제약에 대조한다.
+- **Architect(`architect`):** 계획 작성자. 초안부터 리뷰 반영과 구조·의존성에 영향을 주는 계획 수정까지 문안을 반환한다. 명세나 기준 파일을 바꾸거나 자기 계획을 승인하지 않는다.
+- **Implementer(`implementer`):** 만드는 쪽. 검토된 계획에 따라 코드·에셋·설정을 만들고 자체 확인한다. 요구·제약을 유지하는 국소적 기술 선택은 직접 처리한다.
+- **Programmer Reviewer(`programmer_reviewer`):** 구축 축 판정. 계획을 리허설하고 코드를 사례와 제약에 대조한다.
 - **Tester(`tester`):** 수용 축 판정. 검증 목록을 정하고 사례를 실행해 보인다. 시각 품질 판단이 필요한 사례는 Tester가 확보한 실행 화면으로 Art Director(`art_director`)가 판정하고, 그 판정이 그 사례의 결과다. 수정 필요는 실패로 다룬다.
 
-세 역할 모두 첫 회차부터 종료까지 같은 에이전트를 이어 쓴다. 끝낼지는 두 판정자가 정한다. 위임 경계와 Advisor 자문 조건은 [위임 공통 계약](../../references/delegation.md)을 따른다.
+Implementer와 두 판정자는 첫 회차부터 종료까지 같은 에이전트를 이어 쓴다. Architect에게 수정을 다시 맡길 때는 현재 계획 버전·결정·미결 사항을 전달한다. 모든 역할을 항상 동시에 유지할 필요는 없다. 끝낼지는 두 판정자가 정한다. 위임 경계와 Advisor 자문 조건은 [위임 공통 계약](../../references/delegation.md)을 따른다.
 
 ## 참조
 
@@ -29,7 +30,8 @@ description: Implement a confirmed specification in rounds — an Implementer pl
 
 ## 사례와 검증 목록
 
-- **사례:** 어떤 상황에서 무엇을 하면 무엇이 관측되는지를 한 줄로 적은 것. 명세에 있으면 그대로 쓴다. 없으면 준비 때 주 에이전트가 요구마다 끌어내 계획 파일에 적고, 끌어내며 추측한 곳은 에이전트가 정한 결정으로 남긴다.
+- **사례:** 어떤 상황에서 무엇을 하면 무엇이 관측되는지를 한 줄로 적은 것. 명세에 있으면 그대로 쓴다. 없으면 Architect가 요구에서 사례 초안을 계획에 제안하고 주 에이전트가 선택과 근거를 기록한다. 의미를 추측해야 하는 필수 결정은 보류하며 확정 명세를 바꾸지 않는다.
+- **계획 버전:** Architect의 문안을 주 에이전트가 기준 파일로 저장할 때 부여한다. 계획 검토 결과와 검증 목록이 참조한 버전을 함께 기록하며 작성자의 제출을 검토 통과로 취급하지 않는다.
 - **검증 목록:** 실행해 보일 사례의 목록. Tester가 코드 경로별 대표 사례를 고르고 사례마다 보일 수단을 정한다. 이 목록이 모두 보이면 검증은 끝난다.
 - **제약:** 명세의 제약은 계획과 코드가 그대로 따른다.
 - **revision:** Implementer가 구현이나 수정을 마치고 반환한 시점의 작업 트리 상태. 주 에이전트가 r1, r2 순으로 번호를 붙인다. revision을 만들거나 구분하려고 commit·stash하지 않는다.
@@ -38,9 +40,9 @@ description: Implement a confirmed specification in rounds — an Implementer pl
 
 | 단계 | 하는 일과 끝나는 조건 |
 |---|---|
-| 준비 | 승인 범위, 명세의 경로·버전·해시, 작업 위치, task baseline과 기존 사용자 변경을 확인한다. 명세에 사례가 없으면 끌어내 계획 파일에 먼저 적는다. 진행 기록을 만들고, 이미 있으면 읽어 그 상태에서 이어 간다. |
-| 계획 회차 | Implementer가 계획 초안을 낸다. 주 에이전트가 계획 파일로 저장하고 Programmer와 Tester에게 보낸다. Programmer는 계획을 리허설하고, Tester는 검증 목록을 정하며 결함이면 실패를 먼저 재현한다. 결함을 재현하지 못하면 그 수정은 시작하지 않고 사용자 결정 대기로 둔다. 지적이 돌아오면 **결정**대로 답하고 Implementer가 계획을 고친다. Programmer가 리허설 완료를 보고하고, 검증 목록과 Implementer가 빌드·실행에 쓸 환경이 정해지면 **구현 회차**로 간다. 계획의 작업이 모두 문서·주석이면 Tester를 부르지 않고 Programmer의 판정만으로 진행한다. |
-| 구현 회차 | Implementer가 계획의 작업을 모두 만들고 작업마다 그 사례를 실행해 확인한다. 만든 revision을 Programmer와 Tester에게 동시에 보낸다. 지적과 실패가 돌아오면 한 번에 답하고, 구현 문제는 Implementer가, 검사·fixture 문제는 Tester가 한 번에 고치고, 환경과 설계 문제는 결정으로 다루며, 판정자는 수정이 닿은 곳과 사례만 다시 본다. Tester가 저장소에 남는 파일을 썼으면 새 revision으로 Programmer에게 보낸다. 두 판정자가 지적 없이 결과를 내면 **대조**로 간다. |
+| 준비 | 승인 범위, 명세의 경로·버전·해시, 작업 위치, task baseline과 기존 사용자 변경을 확인한다. 사례가 없으면 Architect에게 계획의 사례 초안도 요청한다. 진행 기록을 만들고, 이미 있으면 읽어 그 상태에서 이어 간다. |
+| 계획 회차 | Architect가 계획 초안·수정안을 내고 주 에이전트가 저장·버전 부여 후 Programmer Reviewer와 Tester에게 보낸다. Programmer Reviewer는 계획을 리허설하고 Tester는 검증 목록·수단을 정하며, 결함이면 실패를 먼저 재현한다. 재현하지 못한 수정은 시작하지 않고 사용자 결정 대기로 둔다. 지적에 주 에이전트가 **결정**대로 답하면 Architect가 문안을 수정하고 주 에이전트가 저장한다. 같은 계획 버전의 리허설 완료, 검증 목록과 Implementer가 빌드·실행에 쓸 환경이 정해지면 **구현 회차**로 간다. 계획이 모두 문서·주석이면 기존처럼 Tester 없이 Programmer Reviewer의 판정으로 진행한다. 계획 작성만 요청받았으면 인계에서 끝낸다. |
+| 구현 회차 | Implementer가 계획의 작업을 만들고 사례를 실행해 확인한다. 만든 revision을 Programmer Reviewer와 Tester에게 동시에 보낸다. 지적과 실패에 한 번에 답하고, 코드 결함·국소 선택은 Implementer가, 검사·fixture는 Tester가 처리한다. 작업 간 구조·의존성에 영향을 주는 계획 결함은 Architect에게 반환해 문안을 수정·저장한 뒤 영향받는 기술 검토·검증 목록을 재확인한다. 필요한 코드 수정은 Implementer가 수행하고 판정자는 수정이 닿은 곳과 사례만 다시 본다. 환경과 명세·범위 문제는 **결정**으로 다룬다. Tester가 저장소에 남는 파일을 썼으면 새 revision으로 Programmer Reviewer에게 보낸다. 두 판정자가 지적 없이 결과를 내면 **대조**로 간다. |
 | 대조 | 두 판정자의 결과를 사례 번호로 맞댄다. 보였다는 사례에 그 동작을 만드는 코드가 없거나, 변경된 코드 경로에 그것을 보이는 사례가 없으면 해당 판정자에게 지적으로 돌려보낸다. 두 판정자가 같은 revision에서 종료를 보고하면 **인계**로 간다. 사용자 결정 대기, 보일 수 없는 사례, 재현하지 못한 결함이 남았으면 상태를 부분이나 막힘으로 한다. |
 | 인계 | 명세 해시가 그대로인지 확인하고 아래 **인계** 항목을 전달한다. |
 
@@ -65,4 +67,4 @@ description: Implement a confirmed specification in rounds — an Implementer pl
 
 ## 도움 스킬
 
-필요한 단계에서 사용 가능한 도움 스킬의 관련 부분만 적용한다. `writing-plans`는 Implementer의 계획 초안 작성, `executing-plans`는 Implementer의 승인 작업 실행에 사용한다. `using-git-worktrees`는 worktree를 지시받은 경우에만 사용한다. 도움 스킬이 명세 수정·명세 리뷰 추가·리뷰어 변경·재위임·조기 통합을 요구하면 해당 단계에 적용하지 않는다. 단순화는 사용 가능한 `ponytail-review`/`ponytail` 또는 `programmer` 역할 지침의 동등 기준을 사용한다. 검증·통합 도움 지침은 이미 승인된 범위에서만 적용하며 commit·merge·push·cleanup 권한을 확대하지 않는다. 도움 스킬의 미설치 자체로 전체 작업을 멈추지 않고 필요한 역할·입력·증거·권한을 생략하지 않는다.
+필요한 단계에서 사용 가능한 도움 스킬의 관련 부분만 적용한다. `writing-plans`는 Architect가 계획 구성·자체 검토에만 사용한다. 파일 저장·사용자 소통·승인·실행 전환은 이 계약과 실제 사용자 승인 범위를 따르며, 도움 스킬의 직접 저장·별도 계획 재승인·실행 방식 선택을 추가하지 않는다. `executing-plans`는 Implementer의 승인 작업 실행에, `using-git-worktrees`는 worktree를 지시받은 경우에만 사용한다. 도움 스킬의 명세 수정·명세 리뷰 추가·리뷰어 변경·재위임·조기 통합 요구는 적용하지 않는다. 단순화는 사용 가능한 `ponytail-review`/`ponytail` 또는 `programmer_reviewer` 역할 지침의 동등 기준을 사용한다. 검증·통합 지침은 이미 승인된 범위에서만 적용하며 commit·merge·push·cleanup 권한을 확대하지 않는다. 도움 스킬의 미설치 자체로 전체 작업을 멈추거나 필요한 역할·입력·증거·권한을 생략하지 않는다.
