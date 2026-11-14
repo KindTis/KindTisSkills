@@ -1,0 +1,2 @@
+# Keep immutable shared license bytes identical across Git checkouts.
+plugins/goal-report/runtime/fonts/RIDIBatang-LICENSE.html text eol=lf
