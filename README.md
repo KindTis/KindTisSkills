@@ -7,12 +7,12 @@
 | 경로 | 내용 | 버전 |
 | --- | --- | --- |
 | [.agents/plugins/marketplace.json](.agents/plugins/marketplace.json) | `kindtis-skills` 마켓플레이스와 선택 설치 목록 | — |
-| [AGENTS.md](AGENTS.md) | 전역 작업 지침 전체 사본 | 2026-11-11 기준 |
-| [agents](agents) | Codex 커스텀 역할 설정(Planner·Architect·두 Reviewer·Implementer·Tester·Advisor·Art Director·Watchdog) | — |
+| [AGENTS.md](AGENTS.md) | 전역 작업 지침 전체 사본 | 재작성 소스·전역 적용 별도 |
+| [agents](agents) | Codex 커스텀 역할 설정(Planner·Architect·두 Reviewer·Implementer·Tester·Advisor·Art Director) | — |
 | [archive](archive) | 플러그인에서 분리한 과거 기록(설치 대상 아님) | — |
 | [plugins/goal-report](plugins/goal-report) | 구현 완료 보고서 스킬, 실행 코드, hook, 예시, 글꼴 | 1.4.9 |
-| [plugins/improve](plugins/improve) | 명세 작성·검토·개선 및 확정 명세 기반 계획·구현 스킬, 참조 문서, 테스트 자료 | 3.0.0 |
-| [plugins/jira](plugins/jira) | Jira 자연어 요청 진입점과 에픽·명세·개발·상태 관리 절차 | 2.0.0 |
+| [plugins/improve](plugins/improve) | 명세 작성·검토·개선 및 확정 명세 기반 계획·구현 스킬, 참조 문서, 테스트 자료 | 4.0.0 |
+| [plugins/jira](plugins/jira) | Jira 자연어 요청 진입점과 에픽·명세·개발·상태 관리 절차 | 3.0.0 |
 
 ## 마켓플레이스 등록과 설치
 
@@ -31,9 +31,9 @@ codex plugin add improve@kindtis-skills
 codex plugin add jira@kindtis-skills
 ```
 
-jira의 새 명세 작성·개선은 `brainstorming`의 요구 구체화 helper와 improve의 `spec`을 사용합니다. Planner가 문안을 작성하고 두 Reviewer가 독립 검토하며 실제 실행 주 에이전트가 저장·승인 소통을 조정합니다. 확정 명세 구현은 `jira:work → improve:implement → Architect`로 계획 작성을 한 번 위임합니다. 완성 명세 발급·상태 작업에는 작성자를 추가하지 않습니다.
+jira의 새 명세 작성·개선은 improve의 spec을 사용하며, 사용 가능한 brainstorming은 요구 구체화 보조로만 씁니다. Planner가 문안을 작성하고 두 Reviewer가 독립 검토하며 실제 실행 주 에이전트가 저장·승인 소통을 조정합니다. 확정 명세 구현은 `jira:work → improve:implement → Architect`로 계획 작성을 한 번 위임합니다. 완성 명세 발급·상태 작업에는 작성자를 추가하지 않습니다.
 
-improve를 쓰려면 [agents](agents)의 `planner`·`architect`·`planner_reviewer`·`programmer_reviewer`·`implementer`·`tester`·`advisor`가 등록돼 있어야 합니다. Planner·Architect·두 Reviewer는 `gpt-6-astra / xhigh / read-only`입니다. 역할 분담과 모델·추론 수준, Advisor 자문·위임 경계는 역할 설정과 [공통 계약](plugins/improve/references/delegation.md)을 따릅니다. 도움 스킬이 있으면 `writing-plans`는 Architect의 계획 구성·자체 검토에, `executing-plans`는 Implementer의 승인 작업에만 사용합니다. worktree를 지시받았으면 `using-git-worktrees`를 사용하며 단순화에는 사용 가능한 `ponytail-review`를 보조로 씁니다. 도움 스킬로 별도 집필·승인·실행 전환 절차를 추가하지 않습니다.
+improve를 쓰려면 [agents](agents)의 `planner`·`architect`·`planner_reviewer`·`programmer_reviewer`·`implementer`·`tester`·`advisor`가 등록돼 있어야 합니다. 시각 검수에는 `art_director`도 필요합니다. Planner·Architect·두 Reviewer는 `gpt-6-astra / xhigh / read-only`입니다. 역할 분담과 모델·추론 수준, Advisor 자문·위임 경계는 역할 설정과 [공통 계약](plugins/improve/references/delegation.md)을 따릅니다. 도움 스킬이 있으면 `writing-plans`는 Architect의 계획 구성·자체 검토에, `executing-plans`는 Implementer의 승인 작업에만 사용합니다. worktree를 지시받았으면 `using-git-worktrees`를 사용하며 단순화에는 사용 가능한 `ponytail-review`를 보조로 씁니다. 도움 스킬로 별도 집필·승인·실행 전환 절차를 추가하지 않습니다.
 
 Jira 작업의 공통 진입점은 **`jira:manage`**입니다. 세부 스킬 이름을 지정하지 않고 다음처럼 요청할 수 있습니다.
 
@@ -56,15 +56,15 @@ Jira 작업의 공통 진입점은 **`jira:manage`**입니다. 세부 스킬 이
 
 GitHub에 반영하기 전에는 이 저장소 루트에서 `codex plugin marketplace add .`로 로컬 구성을 확인할 수 있습니다. 로컬 등록과 GitHub 등록은 같은 마켓플레이스 이름을 사용하므로, GitHub 원본으로 전환할 때는 `codex plugin marketplace remove kindtis-skills`로 로컬 등록을 제거한 뒤 위의 GitHub 등록 명령을 실행합니다.
 
-전역 `AGENTS.md`와 [agents](agents)의 역할 설정 적용은 별도로 관리합니다. 전역 지침은 위임을 지시하지 않으며, 역할은 스킬이 요구하거나 사용자가 지시할 때 사용합니다. Watchdog도 goal 감시가 필요할 때 직접 지시합니다. goal-report의 PC별 실행·배포 설정은 [REPORTING.md](plugins/goal-report/REPORTING.md)를 참고합니다. Jira 작업에는 사용 환경에서 제공하는 Jira 도구와 해당 서비스 접근 권한이 필요합니다.
+전역 `AGENTS.md`와 [agents](agents)의 역할 설정 적용은 별도로 관리합니다. 전역 지침은 위임을 지시하지 않으며, 역할은 스킬이 요구하거나 사용자가 지시할 때 사용합니다. goal-report의 PC별 실행·배포 설정은 [REPORTING.md](plugins/goal-report/REPORTING.md)를 참고합니다. Jira 작업에는 사용 환경에서 제공하는 Jira 도구와 해당 서비스 접근 권한이 필요합니다.
 
-### 역할 식별자 변경과 전역 전환
+### 재작성 계약과 전역 전환
 
-호환되는 변경 묶음은 새 역할 설정, improve `3.0.0`, jira `2.0.0`입니다. 기존 `planner`·`programmer` 리뷰어는 각각 `planner_reviewer`·`programmer_reviewer`로 바뀌며, `planner`는 새 명세 작성자이고 `architect`는 구현 계획 작성자입니다. 저장소 수정만으로 전역 역할이나 설치본이 바뀌지는 않습니다.
+이번 소스 묶음은 improve 4.0.0, jira 3.0.0과 함께 수정된 AGENTS.md·역할 설정입니다. 명세·계획·코드·시각 결과의 반복 개선, 범위 확인·지적 해소·증거에 따른 종료는 [리뷰 계약](plugins/improve/references/review-contract.md)을 따릅니다. 시각 생성·변경 검수 지시는 필수로 적용하고, 불합격은 실질적 영향으로 판단합니다. 스킬은 작업의 반복 개선과 인계를 담당하며 별도의 실행 관리 절차를 포함하지 않습니다.
 
-전역 적용을 요청받으면 기존 계약을 사용하는 작업과 전환 시점을 확인하고, 새 리뷰어·Architect를 준비한 뒤 두 플러그인과 전역 `planner`·`implementer`를 한 전환 작업으로 맞춥니다. 전역의 옛 `programmer`는 새 리뷰어로 전환합니다. 설치 캐시를 직접 편집하거나 Git 마켓플레이스를 로컬 등록으로 바꾸지 않습니다. 실제 설치된 두 스킬과 역할 설정이 일치하는지 대조하고 새 세션에서 역할 식별자·모델과 새 계약이 함께 제공되는지 확인한 뒤 사용합니다. 기존 세션이 자동 갱신됐다고 간주하지 않습니다.
+유지하는 역할 8개의 식별자와 모델·추론·샌드박스 설정은 유지합니다. 저장소 수정만으로 전역 역할·지침·설치 캐시가 갱신되지는 않습니다. 전역 적용을 요청받으면 기존 작업과 전환 시점을 확인하고 두 플러그인·역할·전역 지침을 함께 맞춥니다. 설치 캐시를 직접 편집하거나 Git 마켓플레이스를 로컬 등록으로 바꾸지 않습니다. 새 세션에서 소스와 설치본·역할 계약을 대조하고 실제 호출을 확인하며 기존 세션의 자동 갱신을 가정하지 않습니다.
 
-일부만 적용된 상태에서는 관련 새 작업을 시작하지 않습니다. 필요하면 전환 전 Git 커밋의 소스로 역할·플러그인을 다시 적용해 맞춥니다. 소스 계약 확인과 전역 설치·새 세션 실제 호출 확인은 결과를 구분해 보고합니다.
+일부만 전환된 상태에서 새 계약의 작업을 시작하지 않습니다. 필요하면 전환 전 소스로 맞추며 소스 검증과 설치·실제 실행 검증을 구분해 보고합니다.
 
 ## 플러그인 추가와 갱신
 

@@ -1,6 +1,6 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "improve",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "명세·구현 계획 작성자를 독립 리뷰어와 분리하고 확정 명세 기반 구현·검증을 조정한다."
 }
