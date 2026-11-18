@@ -11,7 +11,7 @@
 | [agents](agents) | Codex 커스텀 역할 설정(Planner·Architect·두 Reviewer·Implementer·Tester·Advisor·Art Director) | — |
 | [archive](archive) | 플러그인에서 분리한 과거 기록(설치 대상 아님) | — |
 | [plugins/goal-report](plugins/goal-report) | 구현 완료 보고서 스킬, 실행 코드, hook, 예시, 글꼴 | 1.4.9 |
-| [plugins/improve](plugins/improve) | 명세 작성·검토·개선 및 확정 명세 기반 계획·구현 스킬, 참조 문서, 테스트 자료 | 4.0.1 |
+| [plugins/improve](plugins/improve) | 명세 작성·검토·개선 및 확정 명세 기반 계획·구현 스킬, 참조 문서, 테스트 자료 | 4.0.2 |
 | [plugins/jira](plugins/jira) | Jira 자연어 요청 진입점과 에픽·명세·개발·상태 관리 절차 | 3.0.0 |
 
 ## 마켓플레이스 등록과 설치
@@ -56,11 +56,11 @@ Jira 작업의 공통 진입점은 **`jira:manage`**입니다. 세부 스킬 이
 
 GitHub에 반영하기 전에는 이 저장소 루트에서 `codex plugin marketplace add .`로 로컬 구성을 확인할 수 있습니다. 로컬 등록과 GitHub 등록은 같은 마켓플레이스 이름을 사용하므로, GitHub 원본으로 전환할 때는 `codex plugin marketplace remove kindtis-skills`로 로컬 등록을 제거한 뒤 위의 GitHub 등록 명령을 실행합니다.
 
-전역 `AGENTS.md`와 [agents](agents)의 역할 설정 적용은 별도로 관리합니다. 전역 지침은 위임을 지시하지 않으며, 역할은 스킬이 요구하거나 사용자가 지시할 때 사용합니다. goal-report의 PC별 실행·배포 설정은 [REPORTING.md](plugins/goal-report/REPORTING.md)를 참고합니다. Jira 작업에는 사용 환경에서 제공하는 Jira 도구와 해당 서비스 접근 권한이 필요합니다.
+전역 `AGENTS.md`와 [agents](agents)의 역할 설정 적용은 별도로 관리합니다. 전역에는 공통 판단 기준을, 역할에는 전문적 판단·권한·반환 경계를, 스킬에는 단계별 입력·인계 책임을 둡니다. 전역 지침은 위임을 지시하지 않으며, 역할은 스킬이 요구하거나 사용자가 지시할 때 사용합니다. goal-report의 PC별 실행·배포 설정은 [REPORTING.md](plugins/goal-report/REPORTING.md)를 참고합니다. Jira 작업에는 사용 환경에서 제공하는 Jira 도구와 해당 서비스 접근 권한이 필요합니다.
 
 ### 재작성 계약과 전역 전환
 
-이번 소스 묶음은 improve 4.0.1, jira 3.0.0과 함께 수정된 AGENTS.md·역할 설정입니다. 명세·계획·코드·시각 결과의 반복 개선, 범위 확인·지적 해소·증거에 따른 종료는 [리뷰 계약](plugins/improve/references/review-contract.md)을 따릅니다. 시각 생성·변경 검수 지시는 필수로 적용하고, 불합격은 실질적 영향으로 판단합니다. 스킬은 작업의 반복 개선과 인계를 담당하며 별도의 실행 관리 절차를 포함하지 않습니다.
+이번 소스 묶음은 improve 4.0.2, jira 3.0.0과 함께 수정된 AGENTS.md·역할 설정입니다. 명세·계획·코드·시각 결과의 반복 개선, 범위 확인·지적 해소·증거에 따른 종료는 [리뷰 계약](plugins/improve/references/review-contract.md)을 따릅니다. 시각 생성·변경 검수 지시는 필수로 적용하고, 불합격은 실질적 영향으로 판단합니다. 스킬은 작업의 반복 개선과 인계를 담당하며 별도의 실행 관리 절차를 포함하지 않습니다.
 
 유지하는 역할 8개의 식별자와 모델·추론·샌드박스 설정은 유지합니다. 저장소 수정만으로 전역 역할·지침·설치 캐시가 갱신되지는 않습니다. 전역 적용을 요청받으면 기존 작업과 전환 시점을 확인하고 두 플러그인·역할·전역 지침을 함께 맞춥니다. 설치 캐시를 직접 편집하거나 Git 마켓플레이스를 로컬 등록으로 바꾸지 않습니다. 새 세션에서 소스와 설치본·역할 계약을 대조하고 실제 호출을 확인하며 기존 세션의 자동 갱신을 가정하지 않습니다.
 
