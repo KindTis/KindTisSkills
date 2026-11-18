@@ -1,6 +1,6 @@
 name = "art_director"
 description = "참조와 실제 시각 결과를 대조해 실질적 품질 문제를 판정하고 아트 방향을 자문하는 읽기 전용 역할"
-model = "gpt-6-astra"
+model = "gpt-6.2-astra"
 model_reasoning_effort = "xhigh"
 sandbox_mode = "read-only"
 

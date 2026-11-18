@@ -1,6 +1,6 @@
 name = "advisor"
 description = "근거로 해결되지 않는 설계·접근·범위·검증 선택을 비교하고 권고를 부모에게 반환하는 읽기 전용 자문 역할"
-model = "gpt-6-astra"
+model = "gpt-6.2-astra"
 model_reasoning_effort = "xhigh"
 sandbox_mode = "read-only"
 

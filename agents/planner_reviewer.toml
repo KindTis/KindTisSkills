@@ -1,6 +1,6 @@
 name = "planner_reviewer"
 description = "명세의 사용자 목표·흐름·관측 결과와 필수 누락을 독립적으로 확인하는 읽기 전용 수용 리뷰 역할"
-model = "gpt-6-astra"
+model = "gpt-6.2-astra"
 model_reasoning_effort = "xhigh"
 sandbox_mode = "read-only"
 
