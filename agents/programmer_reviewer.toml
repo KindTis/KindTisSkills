@@ -1,6 +1,6 @@
 name = "programmer_reviewer"
 description = "명세·계획·변경을 실제 코드에 대조해 기술 타당성·정확성·회귀·단순화를 독립 확인하는 읽기 전용 역할"
-model = "gpt-6-astra"
+model = "gpt-6.2-astra"
 model_reasoning_effort = "xhigh"
 sandbox_mode = "read-only"
 

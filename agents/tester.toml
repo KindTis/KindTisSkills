@@ -1,6 +1,6 @@
 name = "tester"
 description = "요구와 변경 영향에 맞는 검증 목록·재현·실행 증거를 준비하고 필수 검증의 결과를 독립 확인하는 역할"
-model = "gpt-6.1-sol"
+model = "gpt-6.2-sol"
 model_reasoning_effort = "medium"
 sandbox_mode = "workspace-write"
 

@@ -1,6 +1,6 @@
 name = "architect"
 description = "확정 명세와 실제 코드에 근거한 구현 계획·구조적 수정 문안을 부모에게 반환하는 읽기 전용 작성 역할"
-model = "gpt-6-astra"
+model = "gpt-6.2-astra"
 model_reasoning_effort = "xhigh"
 sandbox_mode = "read-only"
 

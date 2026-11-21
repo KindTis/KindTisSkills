@@ -1,6 +1,6 @@
 name = "planner"
 description = "사용자 목표와 저장소 사실을 명세 초안·수정 문안으로 구체화해 부모에게 반환하는 읽기 전용 작성 역할"
-model = "gpt-6-astra"
+model = "gpt-6.2-astra"
 model_reasoning_effort = "xhigh"
 sandbox_mode = "read-only"
 
